@@ -1,0 +1,142 @@
+alert ("Добро пожаловать в игру! ");
+alert ("Раскидываем карты! ");
+
+var rounds = 0;
+var a=0;
+var b=0;
+var c=0;
+
+do {
+
+function getRandomInt (min,max) {
+	return Math.floor(Math.random()*(max-min+1))+min;
+}
+
+function getCard() {
+	var cards = ['6','7','8','9','10','J','K','A'];
+	return cards[getRandomInt(0, cards.length - 1)];
+}
+
+function getSum(arr) {
+	var sum=0;
+
+	for (var j=0; j<arr.length; j++) {
+		var card = arr[j];
+		if (card != 'A') {
+			if (card == 'J' || card == 'K' || card == 'Q') {
+				sum = sum + 10
+			} else {
+				sum = sum + parseInt(card);
+			}
+		}
+	}
+	
+	for (var j=0; j<arr.length; j++) {
+		var card = arr[j];
+		if (card == 'A') {
+			if (sum>10) {
+				sum = sum + 1 ;
+			} else {
+				sum = sum + 11 ;
+			}
+		}
+	}
+	return sum;
+}
+
+var dealer = [getCard()];
+var player = [getCard()];
+
+function getStatus() {
+return " У дилера: "+ dealer.join('') + " У Игрока: "+player.join('')+ " " ;
+
+}
+
+
+
+
+
+
+
+var answer = " " ;
+do {
+	answer = prompt(getStatus() + "Игрок, хотите еще карту? Если да то жми 1, если нет, другое:");
+	if (answer=="1" && getSum(player) < 21) {
+		player.push(getCard());
+	} 
+	if (answer != "1") {
+		alert ("Хорошо, дальше не выдаем")
+		break;
+	}
+	if (getSum(player) > 21) {
+		alert (" Перебор");
+		break;
+	}
+	if (getSum(player) == 21) {
+		alert ("Поздравляем, У Вас БЛЭКДЖЭК!");
+		break;
+	}
+
+	alert(getStatus() + "Диллер берет еще одну карту");
+
+	if (getSum(dealer) < 21) {
+		dealer.push(getCard());
+	} 
+	
+	if (getSum(dealer) > 21) {
+		alert (" Перебор у Диллера");
+		break;
+	}
+
+	if (getSum(dealer) == 21) {
+		alert (" У дилера БЛЭКДЖЭК!");
+		break;
+	}
+	}
+	 
+
+ while (answer=="1");
+
+function getStatus2() {
+	return " У дилера: "+ getSum(dealer) + " У Игрока: "+ getSum(player) ;
+
+}
+ 
+ 
+ if (getSum(player) < getSum(dealer)) {
+ 	
+ 	alert ("Выйграл диллер" + getStatus2());
+ 	b++;
+ }
+  
+
+ 
+
+ else if (getSum(player) > getSum(dealer)) 
+
+ {       alert ("Выйграл игрок!"+ getStatus2()); 
+         a++;
+
+}  else if (getSum(player) == getSum(dealer)) {
+	        alert("Что ж, ничья..." + getStatus2())
+	        c++;
+	        
+}
+
+
+
+rounds++;
+
+}
+
+
+
+while (prompt("Если хотите продолжить, введите 1:") == "1");
+
+alert("Сыграно раундов: " + rounds);
+alert("Игрок выйграл : " + a + "-х  раундах. Диллер выйграл в " + b + "-х раундах. Ничья в " + c + "раундах");
+
+
+
+
+</script>
